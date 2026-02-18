@@ -1,23 +1,23 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 
 const slides = [
   {
     image:
-      "https://cdn.poehali.dev/projects/9765b0b2-6566-413b-a4e7-eefc808258e4/files/74cc9da3-822d-4e46-93d0-997bdce71eb2.jpg",
+      "https://cdn.poehali.dev/projects/9765b0b2-6566-413b-a4e7-eefc808258e4/files/b07ed17d-2e85-4c15-8cae-2339d0dc1f79.jpg",
     question: "Не можешь определиться с вузом?",
     subtitle: "Сотни вариантов, а ясности — ноль. Знакомо?",
   },
   {
     image:
-      "https://cdn.poehali.dev/projects/9765b0b2-6566-413b-a4e7-eefc808258e4/files/c4c0d55d-8d6e-4c28-9c65-d57e23bf1af0.jpg",
+      "https://cdn.poehali.dev/projects/9765b0b2-6566-413b-a4e7-eefc808258e4/files/0064c2e1-f59b-4071-ad29-315ba9132f82.jpg",
     question: "Устал от бесконечных советов?",
-    subtitle: "Родители хотят одно, друзья другое, а ты — третье",
+    subtitle: "Родители хотят одно, друзья — другое, а ты — третье",
   },
   {
     image:
-      "https://cdn.poehali.dev/projects/9765b0b2-6566-413b-a4e7-eefc808258e4/files/0003757a-5b3f-476c-84ed-61553f38a8a0.jpg",
+      "https://cdn.poehali.dev/projects/9765b0b2-6566-413b-a4e7-eefc808258e4/files/5c63d2f7-97a1-4c2e-9ab0-aedad2d14257.jpg",
     question: "А что, если путь уже есть?",
     subtitle: "Пройди короткий тест — и мы покажем твоё направление",
   },
@@ -76,6 +76,18 @@ const Welcome = () => {
     return () => clearInterval(timer);
   }, [current, isLast, goTo]);
 
+  const touchStartX = useRef(0);
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0 && current < slides.length - 1) goTo(current + 1);
+      if (diff < 0 && current > 0) goTo(current - 1);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[var(--dzen-cream)] flex flex-col relative overflow-hidden">
       <button
@@ -88,7 +100,11 @@ const Welcome = () => {
 
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-12">
         <div className="w-full max-w-md mx-auto flex flex-col items-center">
-          <div className="relative w-72 h-72 md:w-80 md:h-80 mb-10">
+          <div
+            className="relative w-72 h-72 md:w-80 md:h-80 mb-10"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
             {slides.map((slide, i) => (
               <div
                 key={i}
