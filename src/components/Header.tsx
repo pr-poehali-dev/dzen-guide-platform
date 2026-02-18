@@ -47,7 +47,7 @@ const Header = () => {
 
         <Link
           to="/quiz"
-          className="bg-[var(--dzen-sky)] hover:bg-[var(--dzen-sky)]/90 text-white px-5 py-2 rounded-full text-sm font-medium transition-all hover:shadow-lg hover:shadow-[var(--dzen-sky)]/20"
+          className="hidden md:inline-flex bg-[var(--dzen-sky)] hover:bg-[var(--dzen-sky)]/90 text-white px-5 py-2 rounded-full text-sm font-medium transition-all hover:shadow-lg hover:shadow-[var(--dzen-sky)]/20"
         >
           Начать путешествие
         </Link>

@@ -2,9 +2,11 @@ import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 import Header from "@/components/Header";
+import BottomNav from "@/components/BottomNav";
 import { Progress } from "@/components/ui/progress";
 import { quizQuestions } from "@/data/quizQuestions";
 import type { StudentProfile } from "@/lib/algorithm";
+import { syncQuizToArchipelago } from "@/lib/energySync";
 
 const motivations = [
   "Отлично! Продолжай в том же духе 🌟",
@@ -54,6 +56,7 @@ const Quiz = () => {
           setSelectedOption(null);
         } else {
           localStorage.setItem("dzenguide_profile", JSON.stringify(newProfile));
+          syncQuizToArchipelago(newProfile);
           navigate("/results");
         }
       }, 600);
@@ -64,8 +67,9 @@ const Quiz = () => {
   return (
     <div className="min-h-screen bg-[var(--dzen-cream)]">
       <Header />
+      <BottomNav />
 
-      <div className="pt-24 pb-12 px-6">
+      <div className="pt-24 pb-20 px-6">
         <div className="container mx-auto max-w-2xl">
           <div className="mb-8">
             <div className="flex items-center justify-between text-sm text-muted-foreground mb-3">

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Icon from "@/components/ui/icon";
 import Header from "@/components/Header";
+import BottomNav from "@/components/BottomNav";
 import { universities, directionEmojis, cityCoords, type Direction } from "@/data/universities";
 
 const MapPage = () => {
@@ -30,8 +31,9 @@ const MapPage = () => {
   return (
     <div className="min-h-screen bg-[var(--dzen-cream)]">
       <Header />
+      <BottomNav />
 
-      <div className="pt-24 pb-12 px-6">
+      <div className="pt-24 pb-20 px-6">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-8 animate-fade-in-up">
             <h1 className="font-heading font-bold text-3xl text-[var(--dzen-blue-dark)] mb-2">

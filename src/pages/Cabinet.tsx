@@ -2,8 +2,10 @@ import { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 import Header from "@/components/Header";
+import BottomNav from "@/components/BottomNav";
 import { getProfilePercentages, getTopDirection, type StudentProfile } from "@/lib/algorithm";
 import { directionEmojis, universities, type Direction } from "@/data/universities";
+import { syncCollectedFaculties } from "@/lib/energySync";
 
 const profileLabels: Record<string, string> = {
   technical: "Технический",
@@ -18,6 +20,8 @@ const Cabinet = () => {
   const [collected, setCollected] = useState<number[]>([]);
 
   useEffect(() => {
+    syncCollectedFaculties();
+
     const savedProfile = localStorage.getItem("dzenguide_profile");
     if (savedProfile) setProfile(JSON.parse(savedProfile));
 
@@ -32,8 +36,9 @@ const Cabinet = () => {
   return (
     <div className="min-h-screen bg-[var(--dzen-cream)]">
       <Header />
+      <BottomNav />
 
-      <div className="pt-24 pb-12 px-6">
+      <div className="pt-24 pb-20 px-6">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-10 animate-fade-in-up">
             <h1 className="font-heading font-bold text-3xl text-[var(--dzen-blue-dark)] mb-2">
@@ -105,6 +110,20 @@ const Cabinet = () => {
                   </Link>
 
                   <Link
+                    to="/archipelago"
+                    className="flex items-center gap-3 p-4 rounded-2xl bg-[var(--dzen-cream)] hover:bg-[var(--dzen-peach)]/20 transition-colors"
+                  >
+                    <div className="w-10 h-10 rounded-xl bg-[var(--dzen-peach)]/20 flex items-center justify-center">
+                      <Icon name="Map" size={18} className="text-[var(--dzen-gold)]" />
+                    </div>
+                    <div>
+                      <div className="text-sm font-medium text-[var(--dzen-blue-dark)]">Архипелаг Будущего</div>
+                      <div className="text-xs text-muted-foreground">Открывай острова и факультеты</div>
+                    </div>
+                    <Icon name="ChevronRight" size={16} className="ml-auto text-muted-foreground" />
+                  </Link>
+
+                  <Link
                     to="/student-day"
                     className="flex items-center gap-3 p-4 rounded-2xl bg-[var(--dzen-cream)] hover:bg-purple-50 transition-colors"
                   >
@@ -113,7 +132,7 @@ const Cabinet = () => {
                     </div>
                     <div>
                       <div className="text-sm font-medium text-[var(--dzen-blue-dark)]">День студента</div>
-                      <div className="text-xs text-muted-foreground">Мини-игра для погружения</div>
+                      <div className="text-xs text-muted-foreground">+Энергия для Архипелага</div>
                     </div>
                     <Icon name="ChevronRight" size={16} className="ml-auto text-muted-foreground" />
                   </Link>

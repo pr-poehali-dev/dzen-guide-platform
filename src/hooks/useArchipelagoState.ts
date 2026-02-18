@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Direction } from "@/data/universities";
 
 export type ArchipelagoPhase = "intro" | "self-discovery" | "energy" | "explore" | "finale";
@@ -75,9 +75,20 @@ function saveProgress(p: ArchipelagoProgress) {
 
 export function useArchipelagoState() {
   const [progress, setProgress] = useState<ArchipelagoProgress>(loadProgress);
+  const mountedRef = useRef(false);
 
   useEffect(() => {
-    saveProgress(progress);
+    if (!mountedRef.current) {
+      mountedRef.current = true;
+      const fresh = loadProgress();
+      setProgress(fresh);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (mountedRef.current) {
+      saveProgress(progress);
+    }
   }, [progress]);
 
   const update = useCallback((partial: Partial<ArchipelagoProgress>) => {

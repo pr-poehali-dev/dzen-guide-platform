@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 import Header from "@/components/Header";
+import BottomNav from "@/components/BottomNav";
 
 const features = [
   {
@@ -40,6 +41,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-[var(--dzen-cream)]">
       <Header />
+      <BottomNav />
 
       <section className="pt-28 pb-20 px-6 overflow-hidden">
         <div className="container mx-auto max-w-6xl">

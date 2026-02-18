@@ -1,7 +1,8 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 import Header from "@/components/Header";
+import BottomNav from "@/components/BottomNav";
 import ArchipelagoMap from "@/components/archipelago/ArchipelagoMap";
 import SelfDiscoveryPhase from "@/components/archipelago/SelfDiscoveryPhase";
 import EnergyBar from "@/components/archipelago/EnergyBar";
@@ -13,6 +14,7 @@ import FinaleOverlay from "@/components/archipelago/FinaleOverlay";
 import { useArchipelagoState } from "@/hooks/useArchipelagoState";
 import { islands, universityIslandMap, universityImages, selfDiscoveryQuizzes } from "@/data/archipelago";
 import { universities, Direction } from "@/data/universities";
+import { syncCollectedFaculties } from "@/lib/energySync";
 
 const directionProfileBoost: Record<string, Partial<Record<Direction, number>>> = {
   technical: { IT: 5, "Естественные науки": 3 },
@@ -39,6 +41,10 @@ const Archipelago = () => {
   const [showChallenge, setShowChallenge] = useState<number | null>(null);
   const [showAlbum, setShowAlbum] = useState(false);
   const [showFinale, setShowFinale] = useState(false);
+
+  useEffect(() => {
+    syncCollectedFaculties();
+  }, [progress.discoveryAlbum]);
 
   const checkAndRevealIslands = useCallback(
     (newEnergies: Record<string, number>) => {
@@ -160,8 +166,9 @@ const Archipelago = () => {
   return (
     <div className="min-h-screen bg-[var(--dzen-cream)]">
       <Header />
+      <BottomNav archipelagoProgress={progress.revealedIslands.length} />
 
-      <div className="pt-20 pb-12 px-4">
+      <div className="pt-20 pb-20 px-4">
         <div className="container mx-auto max-w-4xl">
 
           {progress.phase === "intro" && (

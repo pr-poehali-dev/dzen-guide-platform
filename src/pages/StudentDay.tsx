@@ -1,8 +1,10 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 import Header from "@/components/Header";
+import BottomNav from "@/components/BottomNav";
 import { directions, directionEmojis, type Direction } from "@/data/universities";
+import { syncStudentDayToArchipelago } from "@/lib/energySync";
 
 interface TimeSlot {
   time: string;
@@ -70,15 +72,25 @@ const StudentDay = () => {
   const [currentSlot, setCurrentSlot] = useState(0);
   const [started, setStarted] = useState(false);
 
+  const [daySynced, setDaySynced] = useState(false);
+
   const schedule = useMemo(
     () => (selectedDirection ? daySchedules[selectedDirection] : []),
     [selectedDirection]
   );
 
+  useEffect(() => {
+    if (started && selectedDirection && currentSlot === schedule.length - 1 && !daySynced) {
+      syncStudentDayToArchipelago(selectedDirection);
+      setDaySynced(true);
+    }
+  }, [started, selectedDirection, currentSlot, schedule.length, daySynced]);
+
   const handleStart = () => {
     if (!selectedDirection) return;
     setStarted(true);
     setCurrentSlot(0);
+    setDaySynced(false);
   };
 
   const handleNext = () => {
@@ -90,8 +102,9 @@ const StudentDay = () => {
   return (
     <div className="min-h-screen bg-[var(--dzen-cream)]">
       <Header />
+      <BottomNav />
 
-      <div className="pt-24 pb-12 px-6">
+      <div className="pt-24 pb-20 px-6">
         <div className="container mx-auto max-w-3xl">
           {!started ? (
             <div className="animate-fade-in-up">
@@ -201,6 +214,10 @@ const StudentDay = () => {
                       <p className="text-sm text-green-600">
                         Ты прожил день студента направления «{selectedDirection}»
                       </p>
+                      <div className="mt-3 flex items-center justify-center gap-1.5 text-xs text-[var(--dzen-sky)]">
+                        <Icon name="Zap" size={12} />
+                        <span>+10 энергии «{selectedDirection}» на Архипелаге</span>
+                      </div>
                     </div>
                     <div className="flex gap-3">
                       <button
@@ -210,11 +227,11 @@ const StudentDay = () => {
                         Попробовать другое
                       </button>
                       <Link
-                        to="/results"
+                        to="/archipelago"
                         className="flex-1 bg-[var(--dzen-sky)] hover:bg-[var(--dzen-blue-dark)] text-white py-3 rounded-2xl text-sm font-medium transition-all flex items-center justify-center gap-1"
                       >
-                        К рекомендациям
-                        <Icon name="ArrowRight" size={16} />
+                        <Icon name="Map" size={14} />
+                        К Архипелагу
                       </Link>
                     </div>
                   </div>

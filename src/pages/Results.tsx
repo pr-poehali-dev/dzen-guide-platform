@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 import Header from "@/components/Header";
+import BottomNav from "@/components/BottomNav";
 import { Progress } from "@/components/ui/progress";
 import { getRecommendations, getTopDirection, getProfilePercentages, type StudentProfile, type FacultyRecommendation } from "@/lib/algorithm";
 import { directionEmojis, type Direction } from "@/data/universities";
@@ -56,8 +57,9 @@ const Results = () => {
   return (
     <div className="min-h-screen bg-[var(--dzen-cream)]">
       <Header />
+      <BottomNav />
 
-      <div className="pt-24 pb-12 px-6">
+      <div className="pt-24 pb-20 px-6">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-10 animate-fade-in-up">
             <div className="inline-flex items-center gap-2 bg-green-50 text-green-700 rounded-full px-4 py-2 mb-4 text-sm">
@@ -70,6 +72,16 @@ const Results = () => {
             <p className="text-muted-foreground">
               Топ-направление: {directionEmojis[topDirection as Direction]} <strong>{topDirection}</strong>
             </p>
+            <div className="mt-4">
+              <Link
+                to="/archipelago"
+                className="inline-flex items-center gap-2 bg-[var(--dzen-peach)]/20 hover:bg-[var(--dzen-peach)]/30 text-[var(--dzen-blue-dark)] px-5 py-2.5 rounded-xl text-sm font-medium transition-all"
+              >
+                <Icon name="Zap" size={14} className="text-[var(--dzen-gold)]" />
+                Энергия из теста добавлена на Архипелаг
+                <Icon name="ArrowRight" size={14} />
+              </Link>
+            </div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6 mb-10">
