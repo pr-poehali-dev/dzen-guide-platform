@@ -11,8 +11,8 @@ const features = [
   },
   {
     icon: "Map",
-    title: "Карта вузов",
-    desc: "Собирай коллекцию факультетов на карте России",
+    title: "Архипелаг Будущего",
+    desc: "Интерактивная карта-игра: открывай острова, города и факультеты",
     color: "bg-[var(--dzen-peach)]/20 text-[var(--dzen-gold)]",
   },
   {
@@ -65,11 +65,11 @@ const Index = () => {
                   Начать путешествие
                 </Link>
                 <Link
-                  to="/map"
+                  to="/archipelago"
                   className="inline-flex items-center gap-2 bg-white hover:bg-white/80 text-[var(--dzen-blue-dark)] px-8 py-4 rounded-2xl font-medium border border-[var(--dzen-sand)] transition-all"
                 >
                   <Icon name="Map" size={20} />
-                  Карта вузов
+                  Архипелаг Будущего
                 </Link>
               </div>
               <div className="mt-8 flex items-center gap-6 text-sm text-muted-foreground">

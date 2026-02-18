@@ -9,6 +9,7 @@ import Results from "./pages/Results";
 import MapPage from "./pages/MapPage";
 import Cabinet from "./pages/Cabinet";
 import StudentDay from "./pages/StudentDay";
+import Archipelago from "./pages/Archipelago";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/map" element={<MapPage />} />
           <Route path="/cabinet" element={<Cabinet />} />
           <Route path="/student-day" element={<StudentDay />} />
+          <Route path="/archipelago" element={<Archipelago />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

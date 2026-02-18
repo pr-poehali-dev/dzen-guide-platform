@@ -31,10 +31,10 @@ const Header = () => {
               Тест
             </span>
           </Link>
-          <Link to="/map" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+          <Link to="/archipelago" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             <span className="flex items-center gap-1.5">
               <Icon name="Map" size={16} />
-              Карта
+              Архипелаг
             </span>
           </Link>
           <Link to="/cabinet" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
